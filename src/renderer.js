@@ -80,10 +80,10 @@ export function renderField(ctx, field, view, opts) {
   const { cols, rows } = field;
   const buffer = opts.buffer || heatmapBuffer(ctx.canvas.ownerDocument, field, opts);
   const cs = field.opts.cellSize;
-  // The ImageData pixels are cell centers; the half-cell-size offset
-  // ensures the interpolation doesn't drift by half a cell.
-  const dx = view.toX(field.bounds.minX + cs * 0.5);
-  const dy = view.toY(field.bounds.minY + cs * 0.5);
+  // Each ImageData pixel spans one whole cell, so drawing from the field's
+  // corner already puts pixel centers on cell centers — no half-cell offset.
+  const dx = view.toX(field.bounds.minX);
+  const dy = view.toY(field.bounds.minY);
   const dw = cols * cs * view.scale;
   const dh = rows * cs * view.scale;
 
